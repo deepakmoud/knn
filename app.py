@@ -20,37 +20,25 @@ X = sc.fit_transform(X)
 
 @app.route('/')
 def home():
-  
-    return render_template("index.html")
-  
+  return render_template("index.html")
+ 
 @app.route('/predict',methods=['GET'])
 def predict():
-    
-    
-    '''
-    For rendering results on HTML GUI
-    '''
-    Age = float(request.args.get('age'))
-    SibSp=float(request.args.get('sibsp'))
-    Parch=float(request.args.get('parch'))
-    Fare=float(request.args.get('fare'))
-    Gender=float(request.args.get('gender'))
-    Pclass=float(request.args.get('pclass'))
+  Age = float(request.args.get('age'))
+  SibSp=float(request.args.get('sibsp'))
+  Parch=float(request.args.get('parch'))
+  Fare=float(request.args.get('fare'))
+  Gender=float(request.args.get('gender'))
+  Pclass=float(request.args.get('pclass'))
 
-    
-    prediction = model.predict(sc.transform([[Age,SibSp,Parch,Fare,Gender,Pclass]]))
-    if prediction==0:
+  prediction = model.predict(sc.transform([[Age,SibSp,Parch,Fare,Gender,Pclass]]))
+  if prediction==0:
+    message1="Passenger will not survive."
+  else:
+    message1="Passenger will survive."
 
-      message1="Passenger will not survive."
-    
-    else:
-      message1="Passenger will survive."
-
-    
-    
-        
-    return render_template('index.html', prediction_text='KNN Model predicted : {}'.format(message1))
-
+  return render_template('index.html', prediction_text='KNN Model predicted : {}'.format(message1))
+  
 
 if __name__ == "__main__":
   app.run(debug=True)
